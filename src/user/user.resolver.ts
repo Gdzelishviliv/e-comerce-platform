@@ -4,7 +4,7 @@ import { UserDto, CreateUserInput, UpdateUserInput } from './dto/user.dto';
 
 @Resolver(() => UserDto)
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   @Mutation(() => UserDto)
   async createUser(@Args('input') input: CreateUserInput): Promise<UserDto> {
@@ -13,6 +13,7 @@ export class UserResolver {
       id: user._id,
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
       isActive: user.isActive,
     };
   }
@@ -27,6 +28,7 @@ export class UserResolver {
       id: user._id,
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
       isActive: user.isActive,
     };
   }
@@ -44,6 +46,7 @@ export class UserResolver {
       id: user._id,
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
       isActive: user.isActive,
     };
   }
@@ -55,6 +58,7 @@ export class UserResolver {
       id: user._id,
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
       isActive: user.isActive,
     };
   }
@@ -66,6 +70,7 @@ export class UserResolver {
       id: user._id,
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
       isActive: user.isActive,
     };
   }

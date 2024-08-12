@@ -7,12 +7,12 @@ import { CreateUserInput, UpdateUserInput } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async create(input: CreateUserInput): Promise<User> {
-    const { email, password, username } = input;
+    const { email, password, username, avatar } = input;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new this.userModel({ email, password: hashedPassword, username });
+    const newUser = new this.userModel({ email, password: hashedPassword, username, avatar });
     return newUser.save();
   }
 

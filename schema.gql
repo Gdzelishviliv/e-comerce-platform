@@ -7,6 +7,7 @@ type UserDto {
   username: String!
   email: String!
   isActive: Boolean!
+  avatar: String
 }
 
 type Query {
@@ -25,10 +26,12 @@ input CreateUserInput {
   email: String!
   password: String!
   username: String!
+  avatar: String
 }
 
 input UpdateUserInput {
   email: String
   password: String
   username: String
+  avatar: String
 }
