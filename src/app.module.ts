@@ -1,17 +1,24 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: './schema.gql',
+      playground: true,
     }),
-    MongooseModule.forRoot('mongodb+srv://gdzelishvili:comerce123@comerce-n1.jrwnthh.mongodb.net/?retryWrites=true&w=majority&appName=comerce-n1'),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     UserModule,
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
