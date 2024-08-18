@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  _id: ID!
+  email: String!
+  username: String!
+  avatar: String
+  isActive: Boolean!
+}
+
 type UserDto {
   id: ID!
   username: String!
@@ -20,6 +28,8 @@ type Mutation {
   deleteUser(id: String!): Boolean!
   deactivateUser(id: String!): UserDto!
   activateUser(id: String!): UserDto!
+  login(input: LoginInput!): String!
+  register(input: CreateUserInput!): User!
 }
 
 input CreateUserInput {
@@ -34,4 +44,9 @@ input UpdateUserInput {
   password: String
   username: String
   avatar: String
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }

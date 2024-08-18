@@ -13,9 +13,7 @@ export class UserDto {
     username: string;
 
     @Field()
-    @IsEmail()
-    @IsNotEmpty()
-    @Matches(EMAIL_REGEX, { message: 'Invalid email format' })
+    @IsEmail({}, { message: 'Invalid email format' })
     email: string;
 
     @Field()
@@ -33,7 +31,7 @@ export class CreateUserInput {
 
     @Field()
     @IsNotEmpty()
-    @MinLength(6)
+    @MinLength(6, { message: 'Password must be at least 6 characters long' })
     password: string;
 
     @Field()
@@ -49,13 +47,16 @@ export class CreateUserInput {
 export class UpdateUserInput {
     @Field({ nullable: true })
     @Matches(EMAIL_REGEX, { message: 'Invalid email format' })
+    @IsOptional()
     email?: string;
 
     @Field({ nullable: true })
     @MinLength(6, { message: 'Password must be at least 6 characters long' })
+    @IsOptional()
     password?: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     username?: string;
 
     @Field({ nullable: true })
