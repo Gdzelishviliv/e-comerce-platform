@@ -22,15 +22,21 @@ export class AuthService {
 
         const user = await this.userService.findByEmail(email);
 
-        if (user) {
-            console.log('Database password:', user.password);
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (isMatch) {
-                return user;
-            }
+        if (!user) {
+            throw new UnauthorizedException('Invalid credentials');
         }
 
-        return null;
+        // აქ მომხმარებლის აქტიურობას ვამოწმებთ
+        if (!user.isActive) {
+            throw new UnauthorizedException('Your account is deactivated. Please contact support.');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+
+        return user;
     }
 
 

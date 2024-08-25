@@ -28,8 +28,8 @@ export class UserResolver {
     @Args('id') id: string,
     @Args('input') input: UpdateUserInput,
   ): Promise<UserDto> {
-    const user = await this.userService.update(id, input);
-    return this.mapToUserDto(user);
+    const updatedUser = await this.userService.update(id, input);
+    return this.mapToUserDto(updatedUser);
   }
 
   @Mutation(() => Boolean)

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
@@ -25,7 +25,28 @@ export class UserService {
   }
 
   async update(id: string, input: UpdateUserInput): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, input, { new: true }).exec();
+    const user = await this.userModel.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (input.password) {
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+      user.password = hashedPassword;
+    }
+
+    if (input.username) {
+      user.username = input.username;
+    }
+    if (input.email) {
+      user.email = input.email;
+    }
+    if (input.avatar) {
+      user.avatar = input.avatar;
+    }
+
+    await user.save();
+    return user;
   }
 
   async delete(id: string): Promise<void> {
