@@ -18,8 +18,20 @@ type UserDto {
   avatar: String
 }
 
+type ProductDto {
+  id: ID!
+  name: String!
+  description: String!
+  price: Float!
+  image: String
+  isActive: Boolean!
+  purchasedBy: [UserDto!]!
+}
+
 type Query {
   user(id: String!): UserDto!
+  getProducts(page: Int! = 1, limit: Int! = 10, filters: String, sort: String): [ProductDto!]!
+  getProduct(id: String!): ProductDto!
 }
 
 type Mutation {
@@ -30,6 +42,10 @@ type Mutation {
   activateUser(id: String!): UserDto!
   login(input: LoginInput!): String!
   register(input: CreateUserInput!): User!
+  createProduct(input: CreateProductInput!): ProductDto!
+  addUserToPurchasedBy(productId: String!, userId: String!): ProductDto!
+  updateProduct(id: String!, input: UpdateProductInput!): ProductDto!
+  deleteProduct(id: String!): ProductDto!
 }
 
 input CreateUserInput {
@@ -49,4 +65,20 @@ input UpdateUserInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input CreateProductInput {
+  name: String!
+  description: String!
+  price: Float!
+  image: String
+  isActive: Boolean! = true
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Float
+  image: String
+  isActive: Boolean
 }
